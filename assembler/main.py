@@ -1,5 +1,7 @@
 import argparse
 
+from assembler.assembler import Assembler
+
 
 def parse_args() -> argparse.Namespace:
     """Parses command line arguments."""
@@ -20,13 +22,22 @@ def parse_args() -> argparse.Namespace:
         "--memory_start", help="Start of memory range for the interpreter", type=int
     )
     parser.add_argument(
-        "--memory_start", help="End of memory range for the interpreter", type=int
+        "--memory_end", help="End of memory range for the interpreter", type=int
     )
 
     return parser.parse_args()
 
 
-def main() -> None: ...
+def main() -> None:
+    args = parse_args()
+
+    if args.mode == "assemble":
+        assembler = Assembler()
+        assembler.assemble(args.input_file, args.output_file, args.log_file)
+    elif args.mode == "interpret":
+        ...
+    else:
+        print("Unknown mode. Use 'assemble' or 'interpret'.")
 
 
 if __name__ == "__main__":

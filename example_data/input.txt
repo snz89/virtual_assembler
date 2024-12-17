@@ -1,0 +1,4 @@
+load_const 179
+store_mem 117
+load_const 0
+sgn
