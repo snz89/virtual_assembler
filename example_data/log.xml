@@ -1,1 +1,27 @@
-<log><instruction opcode="2" operand="179" /><instruction opcode="3" operand="117" /><instruction opcode="2" operand="0" /><instruction opcode="4" operand="0" /></log>
+<?xml version="1.0" ?>
+<log>
+  <instruction>
+    <opcode>2</opcode>
+    <operand>179</operand>
+    <byte1>154</byte1>
+    <byte2>5</byte2>
+  </instruction>
+  <instruction>
+    <opcode>3</opcode>
+    <operand>117</operand>
+    <byte1>171</byte1>
+    <byte2>3</byte2>
+  </instruction>
+  <instruction>
+    <opcode>2</opcode>
+    <operand>0</operand>
+    <byte1>2</byte1>
+    <byte2>0</byte2>
+  </instruction>
+  <instruction>
+    <opcode>4</opcode>
+    <operand>0</operand>
+    <byte1>4</byte1>
+    <byte2>0</byte2>
+  </instruction>
+</log>

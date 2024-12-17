@@ -9,7 +9,7 @@ class Assembler:
             lines = f.readlines()
 
         binary_data = bytearray()
-        root = ET.Element("log")
+        log_file_data = []
 
         for line in lines:
             parts = line.strip().split()
@@ -35,14 +35,43 @@ class Assembler:
 
             binary_data.extend([byte1, byte2])
 
-            instruction = ET.SubElement(root, "instruction")
-            instruction.set("opcode", str(opcode))
-            instruction.set("operand", str(operand))
+            # Add the instruction data to log file data for better XML formatting
+            log_file_data.append(
+                {
+                    "opcode": str(opcode),
+                    "operand": str(operand),
+                    "byte1": str(byte1),
+                    "byte2": str(byte2),
+                }
+            )
 
         # Saving a binary file
         with open(binary_file, "wb") as f:
             f.write(binary_data)
 
         # Saving the log file
+        self.write_log_file(log_file, log_file_data)
+
+    def write_log_file(self, log_file, log_file_data):
+        root = ET.Element("log")
+        for entry in log_file_data:
+            instruction = ET.SubElement(root, "instruction")
+            for key, value in entry.items():
+                ET.SubElement(instruction, key).text = str(value)
+
         tree = ET.ElementTree(root)
-        tree.write(log_file)
+
+        with open(log_file, "wb") as f:
+            tree.write(f, encoding="utf-8", xml_declaration=True)
+
+        with open(log_file, "r", encoding="utf-8") as f:
+            xml_content = f.read()
+
+        import xml.dom.minidom
+
+        pretty_xml = xml.dom.minidom.parseString(xml_content).toprettyxml(indent="  ")
+
+        with open(log_file, "w", encoding="utf-8") as f:
+            f.write(pretty_xml)
+
+        print(f"Log written to {log_file}")
