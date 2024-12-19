@@ -1,4 +1,40 @@
-load_const 179
-store_mem 117
+load_const 9
+store_mem 0
+load_const 23
+store_mem 1
+load_const -78
+store_mem 2
+load_const -9
+store_mem 3
 load_const 0
+store_mem 4
+load_const 12
+store_mem 5
+load_const -33
+store_mem 6
+load_const 3
+store_mem 7
+load_mem 0
 sgn
+store_mem 8
+load_mem 1
+sgn
+store_mem 9
+load_mem 2
+sgn
+store_mem 10
+load_mem 3
+sgn
+store_mem 11
+load_mem 4
+sgn
+store_mem 12
+load_mem 5
+sgn
+store_mem 13
+load_mem 6
+sgn
+store_mem 14
+load_mem 7
+sgn
+store_mem 15
