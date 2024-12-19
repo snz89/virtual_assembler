@@ -41,7 +41,9 @@ def main():
         )
     elif args.mode == "interpret":
         uvm = UVM()
-        uvm.execute(args.binary_file, args.result_file, (args.start_address, args.end_address))
+        uvm.execute(
+            args.binary_file, args.result_file, (args.start_address, args.end_address)
+        )
         print(f"Interpretation completed. Result saved to {args.result_file}")
     else:
         parser.print_help()

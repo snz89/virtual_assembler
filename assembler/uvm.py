@@ -4,6 +4,7 @@ import xml.dom.minidom
 
 from assembler.config import LOAD_CONST, LOAD_MEM, STORE_MEM, SGN
 
+
 class UVM:
     def __init__(self, memory_size: int = 256):
         self.memory = [0] * memory_size

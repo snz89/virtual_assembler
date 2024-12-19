@@ -3,6 +3,7 @@ import os
 from assembler.assembler import Assembler
 from assembler.config import LOAD_CONST
 
+
 class TestAssembler(unittest.TestCase):
     def setUp(self):
         """Creates an Assembler obj and temporary files for testing."""
@@ -27,7 +28,9 @@ class TestAssembler(unittest.TestCase):
 
         with open(self.binary_file, "rb") as f:
             binary_data = f.read()
-        expected_binary = bytearray([(LOAD_CONST & 0x07) | ((179 & 0x1F) << 3), (179 >> 5) & 0xFF])
+        expected_binary = bytearray(
+            [(LOAD_CONST & 0x07) | ((179 & 0x1F) << 3), (179 >> 5) & 0xFF]
+        )
         self.assertEqual(binary_data, expected_binary)
 
         with open(self.log_file, "r", encoding="utf-8") as f:
@@ -71,6 +74,7 @@ class TestAssembler(unittest.TestCase):
         self.assertIn("<instruction>", log_data)
         self.assertIn("<opcode>2</opcode>", log_data)
         self.assertIn("<operand>10</operand>", log_data)
+
 
 if __name__ == "__main__":
     unittest.main()
