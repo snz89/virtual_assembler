@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 from typing import Tuple
 import xml.dom.minidom
 
+from assembler.config import LOAD_CONST, LOAD_MEM, STORE_MEM, SGN
 
 class UVM:
     def __init__(self, memory_size: int = 256):
@@ -50,13 +51,13 @@ class UVM:
 
     def execute_instruction(self, opcode: int, operand: int):
         """Executes one instruction."""
-        if opcode == 2:  # LOAD_CONST
+        if opcode == LOAD_CONST:
             self.load_const(operand)
-        elif opcode == 1:  # LOAD_MEM
+        elif opcode == LOAD_MEM:
             self.load_mem(operand)
-        elif opcode == 3:  # STORE_MEM
+        elif opcode == STORE_MEM:
             self.store_mem(operand)
-        elif opcode == 4:  # SGN
+        elif opcode == SGN:
             self.sgn()
         else:
             raise ValueError(f"Unknown opcode: {opcode}")
