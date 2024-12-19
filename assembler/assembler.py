@@ -1,10 +1,13 @@
 import xml.etree.ElementTree as ET
 
+from typing import List, Dict
+
 from assembler.config import LOAD_CONST, LOAD_MEM, STORE_MEM, SGN
 
 
 class Assembler:
-    def assemble(self, input_file, binary_file, log_file):
+    def assemble(self, input_file: str, binary_file: str, log_file: str) -> None:
+        """Converts the source code of the programme into binary code and saves it to a file."""
         with open(input_file, "r") as f:
             lines = f.readlines()
 
@@ -20,7 +23,7 @@ class Assembler:
                 operand = int(parts[1])
             elif command == "load_mem":
                 opcode = LOAD_MEM
-                operand = 0
+                operand = int(parts[1])
             elif command == "store_mem":
                 opcode = STORE_MEM
                 operand = int(parts[1])
@@ -52,7 +55,10 @@ class Assembler:
         # Saving the log file
         self.write_log_file(log_file, log_file_data)
 
-    def write_log_file(self, log_file, log_file_data):
+    def write_log_file(
+        self, log_file: str, log_file_data: List[Dict[str, str]]
+    ) -> None:
+        """Saves logs to an xml file"""
         root = ET.Element("log")
         for entry in log_file_data:
             instruction = ET.SubElement(root, "instruction")

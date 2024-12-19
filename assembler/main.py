@@ -1,43 +1,50 @@
 import argparse
 
 from assembler.assembler import Assembler
+from assembler.uvm import UVM
 
 
-def parse_args() -> argparse.Namespace:
-    """Parses command line arguments."""
+def main():
     parser = argparse.ArgumentParser(description="Assembler and Interpreter for UVM")
+    subparsers = parser.add_subparsers(dest="mode", help="Operation mode")
 
-    parser.add_argument(
-        "mode",
-        choices=["assemble", "interpret"],
-        help="Operation mode: 'assemble' or 'interpret'",
+    # Assembler parser
+    assembler_parser = subparsers.add_parser("assemble", help="Assemble UVM code")
+    assembler_parser.add_argument(
+        "input_file", help="Path to the input file with UVM assembly code"
     )
-    parser.add_argument("input_file", help="Input file")
-    parser.add_argument("output_file", help="Output file")
-    parser.add_argument("log_file", help="Log file in XML format")
-    parser.add_argument(
-        "--result_file", help="Result file for interpreter (XML format)"
+    assembler_parser.add_argument("binary_file", help="Path to the output binary file")
+    assembler_parser.add_argument("log_file", help="Path to the output log file (XML)")
+
+    # Interpreter parser
+    interpreter_parser = subparsers.add_parser(
+        "interpret", help="Interpret UVM binary code"
     )
-    parser.add_argument(
-        "--memory_start", help="Start of memory range for the interpreter", type=int
+    interpreter_parser.add_argument("binary_file", help="Path to the input binary file")
+    interpreter_parser.add_argument(
+        "result_file", help="Path to the output result file (XML)"
     )
-    parser.add_argument(
-        "--memory_end", help="End of memory range for the interpreter", type=int
+    interpreter_parser.add_argument(
+        "start_address", type=int, help="Start address of memory range to save"
+    )
+    interpreter_parser.add_argument(
+        "end_address", type=int, help="End address of memory range to save"
     )
 
-    return parser.parse_args()
-
-
-def main() -> None:
-    args = parse_args()
+    args = parser.parse_args()
 
     if args.mode == "assemble":
         assembler = Assembler()
-        assembler.assemble(args.input_file, args.output_file, args.log_file)
+        assembler.assemble(args.input_file, args.binary_file, args.log_file)
+        print(
+            f"Assembly completed. Binary saved to {args.binary_file}, log saved to {args.log_file}"
+        )
     elif args.mode == "interpret":
-        ...
+        uvm = UVM()
+        uvm.execute(args.binary_file, args.result_file, (args.start_address, args.end_address))
+        print(f"Interpretation completed. Result saved to {args.result_file}")
     else:
-        print("Unknown mode. Use 'assemble' or 'interpret'.")
+        parser.print_help()
 
 
 if __name__ == "__main__":
